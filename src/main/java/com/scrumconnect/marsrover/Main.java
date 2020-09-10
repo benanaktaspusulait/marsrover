@@ -7,21 +7,20 @@ import com.scrumconnect.marsrover.parser.MoveInstructionParser;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 @Slf4j
 public class Main {
 
     public static void main(String[] args) {
         ArrayList<Rover> rovers = new ArrayList<>();
-        Grid grid = GridInstructionParser.parseGrid("5 5");
-        Rover rover = new Rover(grid, MoveInstructionParser.parsePosition("1 2 N"));
-        rovers.add(rover);
-        rover.process("LMLMLMLMM");
-
-        Rover rover2 = new Rover(grid, MoveInstructionParser.parsePosition("3 3 E"));
-        rover2.process("MMRMMRMRRM");
-        rovers.add(rover2);
-
+        Scanner scanner = new Scanner(System.in);
+        Grid grid = GridInstructionParser.parseGrid(scanner.nextLine());
+        while(scanner.hasNext()) {
+            Rover rover = new Rover(grid, MoveInstructionParser.parsePosition(scanner.nextLine()));
+            rovers.add(rover);
+            rover.process(scanner.nextLine());
+        }
         rovers.forEach(r -> System.out.println(r.getPosition()));
     }
 }
